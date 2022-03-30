@@ -39,11 +39,10 @@ func main() {
 	server := http.Server{Addr: ":8080"}
 
 	http.HandleFunc("/url", func(writer http.ResponseWriter, request *http.Request) {
-		length := request.ContentLength
-		body := make([]byte, length)
-		request.Body.Read(body)
-
-		fmt.Fprintln(writer, string(body))
+		fmt.Fprintln(writer, request.URL.String())
+		fmt.Fprintln(writer, request.URL.Query())
+		fmt.Fprintln(writer, request.URL.Query()["id"])
+		fmt.Fprintln(writer, request.URL.Query().Get("id"))
 	})
 	server.ListenAndServe()
 }
