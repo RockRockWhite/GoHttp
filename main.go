@@ -2,6 +2,7 @@ package main
 
 import (
 	"go_web/controllers"
+	"go_web/middlewares"
 	"net/http"
 	"time"
 )
@@ -37,6 +38,5 @@ func main() {
 	//}))
 	controllers.RegisterRoutes()
 
-	server := http.Server{Addr: ":8080"}
-	server.ListenAndServe()
+	http.ListenAndServe(":8080",&middlewares.AuthMiddleware{})
 }
