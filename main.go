@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
+	"go_web/controllers"
 	"net/http"
 	"time"
 )
@@ -36,18 +35,8 @@ func main() {
 	//http.Handle("/home", http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 	//	writer.Write([]byte("welcome"))
 	//}))
+	controllers.RegisterRoutes()
 
 	server := http.Server{Addr: ":8080"}
-
-	http.HandleFunc("/url", func(writer http.ResponseWriter, request *http.Request) {
-		//body := make([]byte, request.ContentLength)
-		//request.Body.Read(body)
-		request.ParseMultipartForm(1024)
-		file, _, _ := request.FormFile("hello")
-		file_bytes, _ := ioutil.ReadAll(file)
-
-		fmt.Fprintln(writer, request.MultipartForm)
-		fmt.Fprintln(writer, string(file_bytes))
-	})
 	server.ListenAndServe()
 }
